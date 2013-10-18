@@ -40,16 +40,53 @@ include ssh::server
 
 ##Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing the fancy stuff with your module here. 
+The two main classes for this module are `ssh::server` and `ssh::client`.  Through these two classes you should be able to manage ssh comprehensively.
 
 ##Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module. This section should include all of the under-the-hood workings of your module so people know what the module is touching on their system but don't need to mess with things. (We are working on automating this section!)
+###Classes
+
+* ssh::client          - Main class for managing the ssh client global settings.
+* ssh::client::install - Installs the main ssh client.
+* ssh::client::config  - Configs the main ssh client.
+* ssh::server          - Main class for managing the ssh server.
+* ssh::server::install - Installs the ssh server.
+* ssh::server::config  - Configures the ssh server.
+* ssh::server::service - Configures the ssh service.
+
+###Parameters
+
+###ssh::server
+
+####`config_ensure`
+
+Should the config file be present or absent.
+
+####`config_path`
+
+The path for the configuration file.
+
+####`package_ensure`
+
+Should the package be present or absent.
+
+####`package_name`
+
+What is the name of the ssh server package?
+
+####`service_ensure`
+
+Should be the service be running or stopped.
+
+####`service_name`
+
+What is the name of the ssh server service?
 
 ##Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+This module only supports the following osfamily:
+
+* Debian
+* RedHat
 
 ##Development
-
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.

@@ -5,4 +5,12 @@ class ssh::server::config {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  file { 'sshd_config':
+    ensure => $ssh::server::config_ensure,
+    path   => $ssh::server::config_path,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0544',
+  }
+
 }

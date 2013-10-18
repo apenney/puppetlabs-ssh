@@ -5,4 +5,9 @@ class ssh::server::service {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  service { 'sshd':
+    ensure => $ssh::server::service_ensure,
+    name   => $ssh::server::service_name,
+  }
+
 }

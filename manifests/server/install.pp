@@ -5,4 +5,9 @@ class ssh::server::install {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  package { 'sshd':
+    ensure => $ssh::server::package_ensure,
+    name   => $ssh::server::package_name,
+  }
+
 }
