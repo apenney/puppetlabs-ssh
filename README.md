@@ -82,6 +82,24 @@ Should be the service be running or stopped.
 
 What is the name of the ssh server service?
 
+###ssh::client
+
+####`config_ensure` 
+
+Should the config file be present or absent.
+
+####`config_path`
+
+The path for the configuration file.
+
+####`package_ensure`
+
+Should the package be present or absent.
+
+####`package_name`
+
+What is the name of the ssh client package?
+
 ##Limitations
 
 This module only supports the following osfamily:

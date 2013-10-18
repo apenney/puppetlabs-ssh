@@ -5,4 +5,9 @@ class ssh::client::config {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  file { 'ssh_config':
+    ensure => $ssh::client::config_ensure,
+    path   => $ssh::client::config_path,
+  }
+
 }
