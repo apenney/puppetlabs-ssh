@@ -82,6 +82,30 @@ Should be the service be running or stopped.
 
 What is the name of the ssh server service?
 
+####`port`
+
+What port should sshd listen on?
+
+####`protocol`
+
+What ssh protocols should be supported?
+
+####`permit_root_password`
+
+Should you be allowed to log in to root via password?
+
+####`password_authentication`
+
+Should you be allowed to log in via passwords?
+
+####`sftp_path`
+
+The path of the sftp binary.
+
+####`hostkeys`
+
+List of hostkeys to include.
+
 ###ssh::client
 
 ####`config_ensure` 
