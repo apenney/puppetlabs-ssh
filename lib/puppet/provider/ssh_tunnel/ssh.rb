@@ -52,25 +52,15 @@ Puppet::Type.type(:ssh_tunnel).provide(:ssh) do
   end
 
   def create
-    if @property_hash[:socks] == true
+    if @resource[:socks] == :true
       # Create a SOCKS proxy
-      ssh(
-        ssh_opts,
-        '-D',
-        @property_hash[:local_port],
-        @property_hash[:remote_server]
-      )
+      ssh(ssh_opts, '-D', @resource[:local_port], @resource[:remote_server])
       @property_hash[:ensure]        = :present
       @property_hash[:local_port]    = @resource[:local_port]
       @property_hash[:remote_server] = @resource[:remote_server]
     else
       # Create an SSH tunnel
-      ssh(
-        ssh_opts,
-        '-L',
-        "#{@property_hash[:local_port]}:#{@property_hash[:forward_server]}:#{@property_hash[:forward_port]}",
-        @property_hash[:remote_server]
-      )
+      ssh(ssh_opts, '-L', "#{@resource[:local_port]}:#{@resource[:forward_server]}:#{@resource[:forward_port]}", @resource[:remote_server])
       @property_hash[:ensure]         = :present
       @property_hash[:local_port]     = @resource[:local_port]
       @property_hash[:forward_server] = @resource[:forward_server]
@@ -92,13 +82,17 @@ Puppet::Type.type(:ssh_tunnel).provide(:ssh) do
 
   mk_resource_methods
 
-  private
-
   # -f tells ssh to go into the background just before command execution
   # -N tells ssh not to execute remote commands
   def self.ssh_opts
-    '-f -N'
+    '-fN'
   end
+  # This allows ssh_opts to be used within the instance.
+  def ssh_opts
+    self.class.ssh_opts
+  end
+
+  private
 
   # Find and return the ssh tunnel/proxy names and their associated pid.
   def self.ssh_processes(pattern)
