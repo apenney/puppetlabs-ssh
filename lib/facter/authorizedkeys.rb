@@ -13,7 +13,6 @@ class Ssh_authorizedkeys
     users
   end
 end
-puts Ssh_authorizedkeys.users
 # Now we iterate over each user, check for an authorized_keys
 # file and then iterate through that file if found to create
 # the appropriate facts.
