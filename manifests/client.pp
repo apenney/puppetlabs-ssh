@@ -4,7 +4,7 @@ class ssh::client (
   $config_path    = $ssh::params::client_config_path,
   $package_ensure = $ssh::params::client_package_ensure,
   $package_name   = $ssh::params::client_package_name,
-) {
+) inherits ssh::params {
 
 anchor { 'ssh::client::begin': } ->
   class { 'ssh::client::install': } ->
