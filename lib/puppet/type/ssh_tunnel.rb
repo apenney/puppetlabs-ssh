@@ -4,8 +4,8 @@ Puppet::Type.newtype(:ssh_tunnel) do
   validate do
     # If we're not in SOCKS mode, we need a server and port to forward to.
     if self[:socks] == :false
-      fail('forward_server is not set') unless self[:forward_server].nil?
-      fail('forward_port is not set') unless self[:forward_port].nil?
+      fail('forward_server is not set') if self[:forward_server].nil?
+      fail('forward_port is not set') if self[:forward_port].nil?
     end
   end
 
