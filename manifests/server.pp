@@ -15,10 +15,12 @@ class ssh::server(
   $hostkeys                  = $ssh::params::server_hostkeys
 ) inherits ssh::params {
 
-anchor { 'ssh::server::begin': } ->
+  contain ssh::server::install
+  contain ssh::server::config
+  contain ssh::server::service
+
   class { 'ssh::server::install': } ->
   class { 'ssh::server::config': } ~>
-  class { 'ssh::server::service': } ->
-anchor { 'ssh::server::end': }
+  class { 'ssh::server::service': }
 
 }
