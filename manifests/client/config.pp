@@ -6,8 +6,9 @@ class ssh::client::config inherits ssh::client {
   }
 
   file { 'ssh_config':
-    ensure => $config_ensure,
-    path   => $config_path,
+    ensure  => $config_ensure,
+    path    => $config_path,
+    content => template('ssh/ssh_config.erb'),
   }
 
 }

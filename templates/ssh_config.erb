@@ -2,9 +2,13 @@
 ## Managed by Puppet
 ##
 
-Host *
-  ForwardAgent <%= forward_agent %>
-  ForwardX11 <%= forward_x11 %>
-  PasswordAuthentication <%= password_authentication %>
-  Port <%= port %>
-  Protocol <%= protocol %>
+<% @configuration_data.sort.each do |hash| -%>
+<%   hash.each do |host, parameters| -%>
+Host <%= host %>
+<%     if parameters.is_a?(Hash) -%>
+<%       parameters.sort.map do |title, value| -%>
+  <%= title %> <%= value %>
+<%       end -%>
+<%     end -%>
+<%   end -%>
+<% end -%>

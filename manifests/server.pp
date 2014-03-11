@@ -7,20 +7,17 @@ class ssh::server(
   $service_ensure            = $ssh::params::server_service_ensure,
   $service_name              = $ssh::params::server_service_name,
   # Configuration parameters
-  $port                      = $ssh::params::server_port,
-  $protocol                  = $ssh::params::server_protocol,
-  $permit_root_login         = $ssh::params::server_permit_root_login,
-  $password_authentication   = $ssh::params::server_password_authentication,
-  $sftp_path                 = $ssh::params::server_sftp_path,
-  $hostkeys                  = $ssh::params::server_hostkeys
+  $configuration_data        = $ssh::params::server_configuration_data,
+  $os_configuration_data     = $ssh::params::server_os_configuration_data,
 ) inherits ssh::params {
+
+  # We declare the classes before containing them.
+  class { 'ssh::server::install': } ->
+  class { 'ssh::server::config': } ~>
+  class { 'ssh::server::service': }
 
   contain ssh::server::install
   contain ssh::server::config
   contain ssh::server::service
-
-  class { 'ssh::server::install': } ->
-  class { 'ssh::server::config': } ~>
-  class { 'ssh::server::service': }
 
 }
