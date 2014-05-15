@@ -6,6 +6,7 @@ group :development, :test do
   gem 'puppetlabs_spec_helper',  :require => false
   gem 'puppet-lint',             :require => false
   gem 'simplecov',               :require => false
+  gem 'beaker-rspec',            :require => false
 end
 
 if puppetversion = ENV['PUPPET_GEM_VERSION']
