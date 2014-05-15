@@ -40,35 +40,26 @@ describe 'ssh::server' do
     it { expect { should contain_class('ssh::server') }.to raise_error(Puppet::Error, /is unsupported on Unsupported/) }
   end
 
-  context 'template contents' do
+  context 'default template contents' do
     let(:facts) {{ :osfamily => 'Debian' }}
-    let(:params) {
-      { :port                    => '8080',
-        :protocol                => '3',
-        :permit_root_login       => false,
-        :password_authentication => false,
-        :sftp_path               => '/usr/test',
-        :hostkeys                => [ 'key1', 'key2', 'key3' ]
-      }
-    }
 
     it { should contain_file('sshd_config').with(
-      :content => /Port 80/
+      :content => /Port 22/
     )}
     it { should contain_file('sshd_config').with(
-      :content => /Protocol 3/
+      :content => /Protocol 2/
     )}
     it { should contain_file('sshd_config').with(
-      :content => /PermitRootLogin false/
+      :content => /PermitRootLogin yes/
     )}
     it { should contain_file('sshd_config').with(
-      :content => /PasswordAuthentication false/
+      :content => /PasswordAuthentication yes/
     )}
     it { should contain_file('sshd_config').with(
-      :content => /Subsystem sftp \/usr\/test/
+      :content => /Subsystem sftp \/usr\/lib\/openssh\/sftp-server \/usr\/lib\/openssh\/sftp-server/
     )}
     it { should contain_file('sshd_config').with(
-      :content => /# HostKeys for protocol version 2\nkey1\nkey2\nkey3\n/
+      :content => /HostKey \/etc\/ssh\/ssh_host_rsa_key/
     )}
   end
 

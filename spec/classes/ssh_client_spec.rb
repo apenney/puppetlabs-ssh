@@ -18,7 +18,14 @@ describe 'ssh::client' do
         :path   => package_path
       )
     end
-  end
+
+    it 'contains default configuration' do
+      should contain_file('ssh_config').with_content(
+        /Host */
+      )
+    end
+
+end
 
   context 'RedHat' do
     it_behaves_like 'client', 'RedHat', 'openssh-clients', '/etc/ssh/ssh_config'

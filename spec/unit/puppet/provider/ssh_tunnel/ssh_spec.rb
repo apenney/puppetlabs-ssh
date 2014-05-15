@@ -30,7 +30,7 @@ describe Puppet::Type.type(:ssh_tunnel).provider(:ssh) do
       subject.class.expects(:ssh_processes).with('-fN -L').returns({'8080:localhost:80 tunnel@remote' => '11'})
     end
 
-    it do
+    it 'tests the tunnels exist' do
       instances = subject.class.instances.map { |p| {:name => p.get(:name), :ensure => p.get(:ensure)} }
       instances[0].should == {:name => '8080:localhost:80-tunnel@remote', :ensure => :present}
       instances[1].should == {:name => '8080-socks@remote', :ensure => :present}
