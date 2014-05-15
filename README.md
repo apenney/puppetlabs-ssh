@@ -15,11 +15,13 @@
 
 ##Overview
 
-This module manages sshd, global ssh client configuration, and user ssh client configuration.
+This module manages OpenSSH's daemon, server configuration, client
+configuration, and user specific client configuration.
 
 ##Module Description
 
-This module manages OpenSSH and the associated configuration with both server and clients.  It'll also allow you to configure per user configuration.
+This module manages OpenSSH and the associated configuration with both server
+and clients.  It'll also allow you to configure per user configuration.
 
 ##Setup
 
@@ -40,7 +42,8 @@ include ssh::server
 
 ##Usage
 
-The two main classes for this module are `ssh::server` and `ssh::client`.  Through these two classes you should be able to manage ssh comprehensively.
+The two main classes for this module are `ssh::server` and `ssh::client`.
+Through these two classes you should be able to manage ssh comprehensively.
 
 ##Reference
 
@@ -53,6 +56,7 @@ The two main classes for this module are `ssh::server` and `ssh::client`.  Throu
 * ssh::server::install - Installs the ssh server.
 * ssh::server::config  - Configures the ssh server.
 * ssh::server::service - Configures the ssh service.
+* ssh::params          - Default parameters.
 
 ###Parameters
 
@@ -82,29 +86,23 @@ Should be the service be running or stopped.
 
 What is the name of the ssh server service?
 
-####`port`
+####`configuration_data`
 
-What port should sshd listen on?
+This allows you to pass in arbitary configuration to the sshd_config file. You
+create it in the format of:
 
-####`protocol`
+{ 'Parameter' => 'Value' }
 
-What ssh protocols should be supported?
+To change any individual value in this hash you'll need to copy the entire
+hash from the params.pp file and modify it to taste.
 
-####`permit_root_password`
+####`os_configuration_data`
 
-Should you be allowed to log in to root via password?
+Similar to the `configuration_data` parameter this is a hash containing
+configuration data that differs between operating systems.  This seperation
+allows you to set only OS specific configuration settings without touching the
+main hash if you so wish.
 
-####`password_authentication`
-
-Should you be allowed to log in via passwords?
-
-####`sftp_path`
-
-The path of the sftp binary.
-
-####`hostkeys`
-
-List of hostkeys to include.
 
 ###ssh::client
 
@@ -123,6 +121,41 @@ Should the package be present or absent.
 ####`package_name`
 
 What is the name of the ssh client package?
+
+####`configuration_data`
+
+This parameter allows you to create configuration entries for multiple
+hosts.  You must create an array of hashes, containing subhashes, such as:
+
+[ { '*' => { 'Port' => '2222' }, 'testhost' => { 'Port => '22' } } ]
+
+###Defines
+
+* ssh::user
+
+###Parameters
+
+###ssh::user
+
+####`ensure`
+
+Should the config file be present or absent.
+
+####`owner`
+
+Who should own the configuration file.
+
+####`group`
+
+Which group should own the configuration file.
+
+####`configuration_data`
+
+This parameter allows you to create configuration entries for multiple
+hosts.  You must create an array of hashes, containing subhashes, such as:
+
+[ { '*' => { 'Port' => '2222' }, 'testhost' => { 'Port => '22' } } ]
+
 
 ##Limitations
 
