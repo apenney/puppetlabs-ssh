@@ -70,7 +70,7 @@ Puppet::Type.type(:ssh_tunnel).provide(:ssh) do
 
     exists? ? (return true) : (return false)
   end
-  
+
   def destroy
     Process.kill('SIGTERM', @property_hash[:pid].to_i)
     @property_hash.clear
