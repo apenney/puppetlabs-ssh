@@ -9,7 +9,7 @@ Facter.add(:public_key_comments) do
       keyfiles = Dir["#{user.dir}/.ssh/*.pub"]
       # Check each .pub file in ~/.ssh/ in turn
       keyfiles.each do |file|
-        contents = File.read("#{user.dir}/.ssh/#{file}")
+        contents = File.read("#{file}")
         contents.each_line do |line|
           comments << line.split(' ').last
         end
